@@ -1,0 +1,12 @@
+{
+  "name": "notes",
+  "version": "1.0.0",
+  "description": "Notes",
+  "author": "REZ1DENT3",
+  "license": "MIT",
+  "dependencies": {
+    "ckeditor": "^4.6.2",
+    "font-awesome": "^4.7.0",
+    "select2": "^4.0.3"
+  }
+}
