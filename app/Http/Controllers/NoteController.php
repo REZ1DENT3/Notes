@@ -101,7 +101,7 @@ class NoteController extends Controller
         return view('note.edit', [
             'note'         => $note,
             'colors'       => Color::all(),
-            'fontAwesomes' => FontAwesome::all(),
+            'fontAwesomes' => FontAwesome::query()->orderBy('value')->get(),
         ]);
     }
 
@@ -152,7 +152,7 @@ class NoteController extends Controller
     {
         return view('note.create', [
             'colors'       => Color::all(),
-            'fontAwesomes' => FontAwesome::all(),
+            'fontAwesomes' => FontAwesome::query()->orderBy('value')->get(),
         ]);
     }
 

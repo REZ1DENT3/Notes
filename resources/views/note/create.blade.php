@@ -11,7 +11,7 @@
 
                     <div class="panel-body">
 
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('note.store') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('note.store', [], false) }}">
 
                             {{ csrf_field() }}
 
