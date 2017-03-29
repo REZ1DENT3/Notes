@@ -110,13 +110,27 @@ class NoteController extends Controller
 
     protected function noteSave(Request $request, Note $note)
     {
-        $note->title           = $request->input('title');
-        $note->text            = $request->input('text');
+        $config = \HTMLPurifier_Config::createDefault();
+        $config->set('Cache.SerializerPath', base_path('storage/purifier'));
+
+        $purifier = new \HTMLPurifier($config);
+
+        $title         = strip_tags($request->input('title'));
+        $text          = $purifier->purify($request->input('text'));
+        $help_password = $request->input('help_password') ?? null;
+
+        if ($help_password)
+        {
+            $help_password = strip_tags($help_password);
+        }
+
+        $note->title           = $title;
+        $note->text            = $text;
         $note->font_awesome_id = $request->input('fontAwesome');
         $note->user_id         = $request->user()->id;
         $note->encrypted       = $request->input('encrypted') === 'on';
         $note->color_id        = $request->input('color');
-        $note->help_password   = $request->input('help_password') ?? null;
+        $note->help_password   = $help_password;
         $note->crc32           = crc32($note->text);
 
         if ($note->encrypted)
