@@ -10,20 +10,6 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * The name of the "created at" column.
-     *
-     * @var string
-     */
-    const CREATED_AT = 'createdAt';
-
-    /**
-     * The name of the "updated at" column.
-     *
-     * @var string
-     */
-    const UPDATED_AT = 'updatedAt';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
