@@ -30,6 +30,7 @@ class NoteController extends Controller
         $pager = Note::query()
             ->where('user_id', $request->user()->id)
             ->orderBy('updated_at', 'desc')
+            ->with('color', 'font_awesome')
             ->paginate();
 
         return view('note.list', [
@@ -50,7 +51,9 @@ class NoteController extends Controller
 
     protected function getNote(Request $request, $id, $decrypt = true)
     {
-        $note = Note::query()->find($id);
+        $note = Note::query()
+            ->with('color', 'font_awesome')
+            ->find($id);
 
         abort_if(
             !$note,
