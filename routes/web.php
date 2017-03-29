@@ -18,13 +18,18 @@ use Illuminate\Support\Facades\
 
 Route::get('/', function ()
 {
-    return redirect(route('login'));
+    return redirect(route('login', [], false));
+});
+
+Route::get('/note', function ()
+{
+    return redirect(route('note.index', [], false));
 });
 
 Auth::routes();
 
 // note
-Route::get('/note', 'NoteController@index')->name('note.index');
+Route::get('/notes', 'NoteController@index')->name('note.index');
 Route::get('/note/create', 'NoteController@create')->name('note.create');
 Route::get('/note/{node}', 'NoteController@show')->name('note.show')->where(['note' => '\d+']);
 Route::get('/note/{node}/edit', 'NoteController@edit')->name('note.edit')->where(['note' => '\d+']);

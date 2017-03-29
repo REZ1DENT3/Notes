@@ -61,12 +61,16 @@
                             </form>
                         @else
                             {!! $note->text  !!}
-                            <div class="clearfix"></div>
+                        @endif
+
+                    </div>
+
+                    <div class="panel-footer">
+                        @if(!$note->encrypted)
                             <i>created at: {{ $note->created_at }}</i>
                             <div class="clearfix"></div>
                             <i>updated at: {{ $note->updated_at }}</i>
                         @endif
-
                     </div>
                 </div>
             </div>

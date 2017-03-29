@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/note';
+    protected $redirectTo;
 
     /**
      * Create a new controller instance.
@@ -34,6 +34,7 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
+        $this->redirectTo = route('note.index', [], false);
         $this->middleware('guest');
     }
 }
