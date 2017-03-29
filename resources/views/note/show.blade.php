@@ -8,7 +8,7 @@
                     <div class="panel-heading">
                         Show Note -
                         <i class="fa fa-{{$note->font_awesome->value}}" style="color: {{ $note->color->value }}"></i>
-                        <i class="fa fa-{{ $note->encrypted ? 'lock' : 'unlock' }}"></i>
+                        <i class="fa fa-{{ $note->getOriginal('encrypted') ? 'lock' : 'unlock' }}"></i>
                         {{ $note->title }}
 
                         <span class="pull-right">
@@ -16,7 +16,7 @@
                                href="{{ route('note.edit', ['note' => $note->id ]) }}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a class="btn btn-danger btn-xs" title="delete"
+                            <a class="btn btn-danger btn-xs note-trash" title="delete"
                                href="{{ route('note.destroy', ['note' => $note->id ]) }}">
                                 <i class="fa fa-trash"></i>
                             </a>
@@ -38,7 +38,11 @@
                                         <input id="password" type="password" class="form-control" name="password"
                                                value="{{ old('password') }}" required autofocus>
 
-                                        @if ($errors->has('password'))
+                                        <span class="help-block">
+                                            <strong>{{ $note->help_password }}</strong>
+                                        </span>
+
+                                    @if ($errors->has('password'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>

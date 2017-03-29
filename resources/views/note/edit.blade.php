@@ -8,7 +8,7 @@
                     <div class="panel-heading">
                         Edit Note -
                         <i class="fa fa-{{$note->font_awesome->value}}" style="color: {{ $note->color->value }}"></i>
-                        <i class="fa fa-{{ $note->encrypted ? 'lock' : 'unlock' }}"></i>
+                        <i class="fa fa-{{ $note->getOriginal('encrypted') ? 'lock' : 'unlock' }}"></i>
                         {{ $note->title }}
                     </div>
 
@@ -25,6 +25,10 @@
                                     <div class="col-md-6">
                                         <input id="password" type="password" class="form-control" name="password"
                                                value="{{ old('password') }}" required autofocus>
+
+                                        <span class="help-block">
+                                            <strong>{{ $note->help_password }}</strong>
+                                        </span>
 
                                         @if ($errors->has('password'))
                                             <span class="help-block">
@@ -53,7 +57,7 @@
 
                                     <div class="col-md-10">
                                         <input id="name" type="text" class="form-control" name="title"
-                                               value="{{ $note->id }}" required autofocus>
+                                               value="{{ $note->title }}" required autofocus>
 
                                         @if ($errors->has('name'))
                                             <span class="help-block">
@@ -156,6 +160,21 @@
                                         @if ($errors->has('secret'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('secret') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group{{ $errors->has('help_password') ? ' has-error' : '' }}">
+                                    <label for="help_password" class="col-md-2 control-label">Help password</label>
+
+                                    <div class="col-md-10">
+                                        <input id="help_password" type="text" class="form-control" name="help_password"
+                                               value="{{ $note->help_password }}" >
+
+                                        @if ($errors->has('help_password'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('help_password') }}</strong>
                                     </span>
                                         @endif
                                     </div>

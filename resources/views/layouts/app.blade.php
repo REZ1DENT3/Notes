@@ -14,6 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('node_modules/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('node_modules/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
 
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
@@ -112,9 +113,13 @@
 <script src="{{ asset('node_modules/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('node_modules/ckeditor/adapters/jquery.js') }}"></script>
 
+<script src="{{ asset('node_modules/es6-promise/dist/es6-promise.min.js') }}"></script>
+<script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+
 <script>
     $(function () {
         $('.editor').ckeditor();
+
         $('.select2').select2({
             templateResult: function (state) {
                 var $option = $(state.element);
@@ -131,6 +136,42 @@
 
                 return state.text;
             }
+        });
+        $('.note-trash').click(function (event) {
+            event.preventDefault();
+            var $a = $(this);
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
+                $.ajax({
+                    url: $a.attr('href'),
+                    method: 'DELETE',
+                    headers: { 'X-CSRF-TOKEN': window.Laravel.csrfToken },
+                    statusCode: {
+                        403: function () {
+                            swal(
+                                'Cancelled!',
+                                'Error destroyed.',
+                                'error'
+                            )
+                        },
+                        204: function () {
+                            $a.parents('tr').remove();
+                            swal(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    }
+                });
+            })
         });
     });
 </script>

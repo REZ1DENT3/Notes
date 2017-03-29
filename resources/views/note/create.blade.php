@@ -124,6 +124,21 @@
                                 </div>
                             </div>
 
+                            <div class="form-group{{ $errors->has('help_password') ? ' has-error' : '' }}">
+                                <label for="help_password" class="col-md-2 control-label">Help password</label>
+
+                                <div class="col-md-10">
+                                    <input id="help_password" type="text" class="form-control" name="help_password"
+                                           value="{{ old('help_password') }}" >
+
+                                    @if ($errors->has('help_password'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('help_password') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-2">
                                     <button type="submit" class="btn btn-primary">

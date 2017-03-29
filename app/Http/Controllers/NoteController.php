@@ -37,15 +37,40 @@ class NoteController extends Controller
         ]);
     }
 
-    protected function getNote(Request $request, $id)
+    protected function destroy(Request $request, $id)
     {
-        $note = Note::query()
-            ->where('user_id', $request->user()->id)
-            ->find($id);
+        /**
+         * @var $note Note
+         */
+        $note = $this->getNote($request, $id, false);
 
-        if (!$note)
+        abort_if($note->delete(), 204);
+        abort(403);
+    }
+
+    protected function getNote(Request $request, $id, $decrypt = true)
+    {
+        $note = Note::query()->find($id);
+
+        abort_if(
+            !$note,
+            404,
+            'Note not found'
+        );
+
+        abort_if(
+            $note->user_id !== $request->user()->id,
+            401,
+            'Access Denied'
+        );
+
+        if ($decrypt && $request->method() === 'POST')
         {
-            throw new \InvalidArgumentException('Access Denied');
+            $note->text = (new Secure())
+                ->secret($request->input('password'))
+                ->decrypt($note->text);
+
+            $note->encrypted = $note->crc32 !== crc32($note->text);
         }
 
         return $note;
@@ -55,15 +80,6 @@ class NoteController extends Controller
     {
         $note = $this->getNote($request, $id);
 
-        if ($request->method() === 'POST')
-        {
-            $note->text = (new Secure())
-                ->secret($request->input('password'))
-                ->decrypt($note->text);
-
-            $note->encrypted = !$note->text;
-        }
-
         return view('note.show', [
             'note' => $note
         ]);
@@ -71,31 +87,44 @@ class NoteController extends Controller
 
     public function update(Request $request, $id)
     {
+        $note = $this->getNote($request, $id, false);
 
-        $note = $this->getNote($request, $id);
+        $this->noteSave($request, $note);
 
-        return $request->input();
-
+        return redirect(route('note.show', ['note' => $note->id]));
     }
 
     public function edit(Request $request, $id)
     {
         $note = $this->getNote($request, $id);
 
-        if ($request->method() === 'POST')
-        {
-            $note->text = (new Secure())
-                ->secret($request->input('password'))
-                ->decrypt($note->text);
-
-            $note->encrypted = !$note->text;
-        }
-
         return view('note.edit', [
             'note'         => $note,
             'colors'       => Color::all(),
             'fontAwesomes' => FontAwesome::all(),
         ]);
+    }
+
+    protected function noteSave(Request $request, Note $note)
+    {
+        $note->title           = $request->input('title');
+        $note->text            = $request->input('text');
+        $note->font_awesome_id = $request->input('fontAwesome');
+        $note->user_id         = $request->user()->id;
+        $note->encrypted       = $request->input('encrypted') === 'on';
+        $note->color_id        = $request->input('color');
+        $note->help_password   = $request->input('help_password') ?? null;
+        $note->crc32           = crc32($note->text);
+
+        if ($note->encrypted)
+        {
+            $secure     = new Secure();
+            $note->text = $secure
+                ->secret($request->input('secret'))
+                ->encrypt($note->text);
+        }
+
+        return $note->save();
     }
 
     /**
@@ -107,22 +136,7 @@ class NoteController extends Controller
     {
         $note = new Note();
 
-        $note->title           = $request->input('title');
-        $note->text            = $request->input('text');
-        $note->font_awesome_id = $request->input('fontAwesome');
-        $note->user_id         = $request->user()->id;
-        $note->encrypted       = $request->input('encrypted') === 'on';
-        $note->color_id        = $request->input('color');
-
-        if ($note->encrypted)
-        {
-            $secure     = new Secure();
-            $note->text = $secure
-                ->secret($request->input('secret'))
-                ->encrypt($note->text);
-        }
-
-        $note->save();
+        $this->noteSave($request, $note);
 
         return redirect(route('note.edit', [
             'note' => $note->id

@@ -47,7 +47,7 @@
                                                href="{{ route('note.edit', ['note' => $note->id ]) }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-danger btn-xs" title="delete"
+                                            <a class="btn btn-danger btn-xs note-trash" title="delete"
                                                href="{{ route('note.destroy', ['note' => $note->id ]) }}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
