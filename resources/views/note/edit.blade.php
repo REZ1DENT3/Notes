@@ -15,7 +15,7 @@
                     <div class="panel-body">
 
                         @if($note->encrypted)
-                            <form class="form-horizontal" role="form" method="POST" action="{{ route('note.edit', ['note' => $note->id]) }}">
+                            <form class="form-horizontal" role="form" method="POST" action="{{ route('note.edit', ['note' => $note->id], false) }}">
 
                                 {{ csrf_field() }}
 
@@ -48,7 +48,7 @@
 
                             </form>
                         @else
-                            <form class="form-horizontal" role="form" method="POST" action="{{ route('note.update', ['note' => $note->id]) }}">
+                            <form class="form-horizontal" role="form" method="POST" action="{{ route('note.update', ['note' => $note->id], false) }}">
 
                                 {{ csrf_field() }}
 

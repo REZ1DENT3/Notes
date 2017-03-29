@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="{{ route('note.create') }}" class="pull-right btn btn-success btn-xs">
+                        <a href="{{ route('note.create', [], false) }}" class="pull-right btn btn-success btn-xs">
                             <i class="fa fa-plus"></i>
                             Add Note
                         </a>
@@ -40,15 +40,15 @@
                                         <td>{{ $note->updated_at }}</td>
                                         <td>
                                             <a class="btn btn-info btn-xs" title="preview"
-                                               href="{{ route('note.show', ['note' => $note->id ]) }}">
+                                               href="{{ route('note.show', ['note' => $note->id ], false) }}">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="btn btn-primary btn-xs" title="edit"
-                                               href="{{ route('note.edit', ['note' => $note->id ]) }}">
+                                               href="{{ route('note.edit', ['note' => $note->id ], false) }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a class="btn btn-danger btn-xs note-trash" title="delete"
-                                               href="{{ route('note.destroy', ['note' => $note->id ]) }}">
+                                               href="{{ route('note.destroy', ['note' => $note->id ], false) }}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
@@ -57,7 +57,7 @@
                                     <tr>
                                         <td colspan="4" class="text-center">
                                             <h3>No notes</h3>
-                                            <a class="btn btn-primary" href="{{ route('note.create') }}">
+                                            <a class="btn btn-primary" href="{{ route('note.create', [], false) }}">
                                                 <i class="fa fa-plus"></i>
                                                 Add Note
                                             </a>

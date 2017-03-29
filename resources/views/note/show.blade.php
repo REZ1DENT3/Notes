@@ -13,11 +13,11 @@
 
                         <span class="pull-right">
                             <a class="btn btn-primary btn-xs" title="edit"
-                               href="{{ route('note.edit', ['note' => $note->id ]) }}">
+                               href="{{ route('note.edit', ['note' => $note->id ], false) }}">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <a class="btn btn-danger btn-xs note-trash" title="delete"
-                               href="{{ route('note.destroy', ['note' => $note->id ]) }}">
+                               href="{{ route('note.destroy', ['note' => $note->id ], false) }}">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </span>
@@ -27,7 +27,7 @@
 
                         @if($note->encrypted)
                             <form class="form-horizontal" role="form" method="POST"
-                                  action="{{ route('note.show', ['note' => $note->id]) }}">
+                                  action="{{ route('note.show', ['note' => $note->id], false) }}">
 
                                 {{ csrf_field() }}
 

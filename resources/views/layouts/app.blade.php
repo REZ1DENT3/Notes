@@ -11,10 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('node_modules/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('node_modules/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+    <link href="/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/node_modules/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
@@ -73,8 +73,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
+                        <li><a href="{{ route('login', [], false) }}">Login</a></li>
+                        <li><a href="{{ route('register', [], false) }}">Register</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -84,13 +84,13 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="{{ route('logout') }}"
+                                    <a href="{{ route('logout', [], false) }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         Logout
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    <form id="logout-form" action="{{ route('logout', [], false) }}" method="POST"
                                           style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
@@ -107,14 +107,14 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('node_modules/bootstrap-checkbox/dist/js/bootstrap-checkbox.min.js') }}"></script>
-<script src="{{ asset('node_modules/select2/dist/js/select2.min.js') }}"></script>
-<script src="{{ asset('node_modules/ckeditor/ckeditor.js') }}"></script>
-<script src="{{ asset('node_modules/ckeditor/adapters/jquery.js') }}"></script>
+<script src="/js/app.js"></script>
+<script src="/node_modules/bootstrap-checkbox/dist/js/bootstrap-checkbox.min.js"></script>
+<script src="/node_modules/select2/dist/js/select2.min.js"></script>
+<script src="/node_modules/ckeditor/ckeditor.js"></script>
+<script src="/node_modules/ckeditor/adapters/jquery.js"></script>
 
-<script src="{{ asset('node_modules/es6-promise/dist/es6-promise.min.js') }}"></script>
-<script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+<script src="/node_modules/es6-promise/dist/es6-promise.min.js"></script>
+<script src="/node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
 
 <script>
     $(function () {
